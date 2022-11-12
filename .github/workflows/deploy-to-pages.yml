@@ -20,7 +20,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
     - name: Checkout repo
@@ -48,24 +51,18 @@ jobs:
       run: |
         export FLASK_DEBUG=True; export FLASK_DEVELOPMENT=True
         python app.py build
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-        with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-          persist-credentials: false
-          fetch-depth: 0
-      - name: Setup Pages
-        uses: actions/configure-pages@v2
-      - name: Upload artifacts
-        uses: actions/upload-pages-artifact@v1
-        with:
-          path: './build'
-      - name: Deploy to Github Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+    - name: Checkout repo
+      uses: actions/checkout@v3
+      with:
+        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        persist-credentials: false
+        fetch-depth: 0
+    - name: Setup Pages
+      uses: actions/configure-pages@v2
+    - name: Upload artifacts
+      uses: actions/upload-pages-artifact@v1
+      with:
+        path: './build'
+    - name: Deploy to Github Pages
+      id: deployment
+      uses: actions/deploy-pages@v1
