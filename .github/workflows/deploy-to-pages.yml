@@ -45,8 +45,8 @@ jobs:
         python app.py build
     - name: Add to repo and commit
       env:
-        MY_EMAIL: github-actions[bot]@users.noreply.github.com
-        MY_NAME: github-actions[bot]
+        MY_EMAIL: brian.mcdorkle@gmail.com
+        MY_NAME: whatcoloris
       run: |
         git config --local user.email $MY_EMAIL
         git config --local user.name $MY_NAME
