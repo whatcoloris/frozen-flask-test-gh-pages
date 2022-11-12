@@ -51,18 +51,8 @@ jobs:
       run: |
         export FLASK_DEBUG=True; export FLASK_DEVELOPMENT=True
         python app.py build
-    - name: Checkout repo
-      uses: actions/checkout@v3
-      with:
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        persist-credentials: false
-        fetch-depth: 0
-    - name: Setup Pages
-      uses: actions/configure-pages@v2
-    - name: Upload artifacts
-      uses: actions/upload-pages-artifact@v1
-      with:
-        path: 'build/'
     - name: Deploy to Github Pages
-      id: deployment
-      uses: actions/deploy-pages@v1
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./build
