@@ -48,6 +48,7 @@ jobs:
       run: |
         git config --global user.email $MY_EMAIL
         git config --global user.name $MY_NAME
+        git remote set-url origin https://$MY_NAME:${{secrets.GH_SECRET }}@github.com/whatcoloris/frozen-flask-test-gh-pages.git
         git add -f build
         git commit -am "Deploy on gh-pages"
         git subtree split --prefix build -b gh-pages
