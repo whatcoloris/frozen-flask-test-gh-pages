@@ -52,7 +52,7 @@ jobs:
         git commit -am "Deploy on gh-pages"
         git subtree split --prefix build -b gh-pages
     - name: Push to pages
-      uses: ad-am/github-push-action@v0.5.0
+      uses: ad-m/github-push-action@v0.5.0
       with:
         github_token: ${{ secrets.GH_SECRET }}
         branch: gh-pages
