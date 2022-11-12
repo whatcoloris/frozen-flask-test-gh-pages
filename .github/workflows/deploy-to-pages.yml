@@ -41,11 +41,13 @@ jobs:
       run: |
         export FLASK_DEBUG=True; export FLASK_DEVELOPMENT=True
         python app.py build
-    - name: Init new repo and commit
+    - name: Add to repo and commit
       env:
         MY_EMAIL: github-actions[bot]@users.noreply.github.com
         MY_NAME: github-actions[bot]
       run: |
+        git config --local user.email $MY_EMAIL
+        git config --local user.name $MY_NAME
         git add -f build
         git commit -am "Deploy on gh-pages"
         git subtree split --prefix build -b gh-pages
