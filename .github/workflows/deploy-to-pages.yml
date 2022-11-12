@@ -44,8 +44,6 @@ jobs:
         export FLASK_DEBUG=True; export FLASK_DEVELOPMENT=True
         python app.py build
     - name: Add to repo and commit
-      with:
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       env:
         MY_EMAIL: github-actions[bot]@users.noreply.github.com
         MY_NAME: github-actions[bot]
