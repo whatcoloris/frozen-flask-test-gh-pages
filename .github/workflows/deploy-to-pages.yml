@@ -43,7 +43,7 @@ jobs:
         python app.py build
     - name: Init new repo and commit
       env:
-        MY_EMAIL: whatcoloris@gmail.com
+        MY_EMAIL: brian.mcdorkle@gmail.com
         MY_NAME: whatcoloris
       run: |
         git config --global user.email $MY_EMAIL
