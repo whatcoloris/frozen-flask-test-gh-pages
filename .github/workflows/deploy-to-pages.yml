@@ -46,9 +46,11 @@ jobs:
         MY_EMAIL: action@gmail.com
         MY_NAME: GitHub Action
       run: |
+        cd build
+        git init
+        git add -A
         git config --global user.email $MY_EMAIL
         git config --global user.name $MY_NAME
-        git add -f build
         git commit -am "Deploy on gh-pages"
         git subtree split --prefix build -b gh-pages
     - name: Push to pages
@@ -57,4 +59,4 @@ jobs:
         github_token: ${{ secrets.GH_SECRET }}
         branch: gh-pages
         force: true
-        directory: .
+        directory: ./build
