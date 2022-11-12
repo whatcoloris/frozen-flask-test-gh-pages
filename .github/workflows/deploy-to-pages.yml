@@ -43,21 +43,19 @@ jobs:
         python app.py build
     - name: Init new repo and commit
       env:
-        MY_EMAIL: action@gmail.com
-        MY_NAME: GitHub Action
+        MY_EMAIL: github-actions[bot]@users.noreply.github.com
+        MY_NAME: github-actions[bot]
       run: |
-        git subtree add build
-        cd build
-        git init
         git add -A
-        git config --global user.email $MY_EMAIL
-        git config --global user.name $MY_NAME
+        git config --local user.email $MY_EMAIL
+        git config --local user.name $MY_NAME
         git commit -am "Deploy on gh-pages"
         git subtree split --prefix build -b gh-pages
     - name: Push to pages
-      uses: ad-m/github-push-action@v0.5.0
+      uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.GH_SECRET }}
+        ssh: true
         branch: gh-pages
         force: true
         directory: ./build
