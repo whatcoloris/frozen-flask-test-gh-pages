@@ -1,8 +1,8 @@
 import sys,os
 from flask import Flask
 from flask_frozen import Freezer
-from dotenv import load_dotenv
-load_dotenv()
+#from dotenv import load_dotenv
+#load_dotenv()
 
 app = Flask(__name__)
 
