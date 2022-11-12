@@ -48,6 +48,7 @@ jobs:
       run: |
         git config --local user.email $MY_EMAIL
         git config --local user.name $MY_NAME
+        git add -f build
         git commit -am "Deploy on gh-pages"
         git subtree split --prefix build -b gh-pages
     - name: Push to pages
