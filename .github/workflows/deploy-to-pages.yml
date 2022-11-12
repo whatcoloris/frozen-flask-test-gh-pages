@@ -56,8 +56,7 @@ jobs:
     - name: Push to pages
       uses: ad-m/github-push-action@master
       with:
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        ssh: true
+        github_token: ${{ secrets.GH_SECRET }}
         branch: gh-pages
         force: true
         directory: ./build
