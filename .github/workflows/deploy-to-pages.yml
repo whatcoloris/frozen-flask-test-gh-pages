@@ -46,6 +46,7 @@ jobs:
         MY_EMAIL: action@gmail.com
         MY_NAME: GitHub Action
       run: |
+        git subtree add build
         cd build
         git init
         git add -A
