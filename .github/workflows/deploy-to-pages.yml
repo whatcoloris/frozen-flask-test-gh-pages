@@ -8,21 +8,21 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+  workflow_dispatch:
 
 permissions:
   contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
-    - uses: actions/checkout@v3
-      with:
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-        persist-credentials: false
-        fetch-depth: 0
     - name: Set up Python 3.10
       uses: actions/setup-python@v3
       with:
@@ -45,20 +45,24 @@ jobs:
       run: |
         export FLASK_DEBUG=True; export FLASK_DEVELOPMENT=True
         python app.py build
-    - name: Add to repo and commit
-      env:
-        MY_EMAIL: brian.mcdorkle@gmail.com
-        MY_NAME: whatcoloris
-      run: |
-        git config --local user.email $MY_EMAIL
-        git config --local user.name $MY_NAME
-        git add -f build
-        git commit -am "Deploy on gh-pages"
-        git subtree split --prefix build -b gh-pages
-    - name: Push to pages
-      uses: ad-m/github-push-action@master
-      with:
-        github_token: ${{ secrets.GH_SECRET }}
-        branch: gh-pages
-        force: true
-        directory: ./build
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+          with:
+            ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+            persist-credentials: false
+            fetch-depth: 0
+      - name: Setup Pages
+        uses: actions/configure-pages@v2
+      - name: Upload artifacts
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './build'
+      - name: Deploy to Github Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
