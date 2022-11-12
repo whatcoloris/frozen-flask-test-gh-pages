@@ -54,7 +54,6 @@ jobs:
     - name: Push to pages
       uses: ad-m/github-push-action@master
       with:
-        ssh: true
         branch: gh-pages
         force: true
         directory: ./build
