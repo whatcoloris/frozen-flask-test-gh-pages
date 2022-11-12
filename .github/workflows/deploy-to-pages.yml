@@ -46,7 +46,6 @@ jobs:
         MY_EMAIL: github-actions[bot]@users.noreply.github.com
         MY_NAME: github-actions[bot]
       run: |
-        git add -A
         git config --local user.email $MY_EMAIL
         git config --local user.name $MY_NAME
         git commit -am "Deploy on gh-pages"
